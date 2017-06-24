@@ -1,0 +1,9 @@
+c:\users\james\documents\visual studio 2017\VertexAndEdges\myDIPFirst\myDIPFirst\bin\Debug\myDIPFirst.exe.config
+c:\users\james\documents\visual studio 2017\VertexAndEdges\myDIPFirst\myDIPFirst\bin\Debug\myDIPFirst.exe
+c:\users\james\documents\visual studio 2017\VertexAndEdges\myDIPFirst\myDIPFirst\bin\Debug\myDIPFirst.pdb
+c:\users\james\documents\visual studio 2017\VertexAndEdges\myDIPFirst\myDIPFirst\obj\Debug\myDIPFirst.csprojResolveAssemblyReference.cache
+c:\users\james\documents\visual studio 2017\VertexAndEdges\myDIPFirst\myDIPFirst\obj\Debug\myDIPFirst.Form1.resources
+c:\users\james\documents\visual studio 2017\VertexAndEdges\myDIPFirst\myDIPFirst\obj\Debug\myDIPFirst.Properties.Resources.resources
+c:\users\james\documents\visual studio 2017\VertexAndEdges\myDIPFirst\myDIPFirst\obj\Debug\myDIPFirst.csproj.GenerateResource.Cache
+c:\users\james\documents\visual studio 2017\VertexAndEdges\myDIPFirst\myDIPFirst\obj\Debug\myDIPFirst.exe
+c:\users\james\documents\visual studio 2017\VertexAndEdges\myDIPFirst\myDIPFirst\obj\Debug\myDIPFirst.pdb
