@@ -144,17 +144,77 @@ namespace myDIPFirst
 
         private void rotateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int rotation = Convert.ToInt32(Prompt.ShowDialog("How many degrees you want to rotate the image?", "Rotation"));
+            //newX = (int)((x) * Math.Cos(rotation) + (y) * (-Math.Sin(rotation)));
+            //newY = (int)(((x) * Math.Sin(rotation) + (y) * Math.Cos(rotation)));
+            double rotation = Math.PI / 180 * Convert.ToDouble(Prompt.ShowDialog("How many degrees you want to rotate the image?", "Rotation"));
             result = new Bitmap(source.Width, source.Height); //initalize the image
             Color pixel;
-            int newX, newY;
-            for (int x = 0; x < source.Width; x++)
+            int newX, newY, transX, transY;
+            for (int x = 0; x < source.Width/2; x++)
             {
-                for (int y = 0; y < source.Height; y++)
+                for (int y = 0; y < source.Height/2; y++)
                 {
-                    //NOT WORKING
+                    //quadrant 1
+                    pixel = source.GetPixel(x, y);
+                    newX = (int)((x - source.Width / 2) * Math.Cos(rotation) + (y - source.Height / 2) * (-Math.Sin(rotation)));
+                    newY = (int)(((x - source.Width / 2) * Math.Sin(rotation) + (y - source.Height / 2) * Math.Cos(rotation)));
+                    transX = newX + source.Width / 2;
+                    transY = newY + source.Height / 2;
+                    if (transX >= 0 && transX < source.Width && transY >= 0 && transY < source.Height)
+                    {
+                        result.SetPixel(transX, transY, pixel);
+                    }
                 }
             }
+            for (int x = source.Width / 2; x < source.Width; x++)
+            {
+                for (int y = source.Height / 2; y < source.Height; y++)
+                {
+                    //quadrant 4
+                    pixel = source.GetPixel(x, y);
+                    newX = (int)((x - source.Width / 2) * Math.Cos(rotation) + (y - source.Height / 2) * (-Math.Sin(rotation)));
+                    newY = (int)(((x - source.Width / 2) * Math.Sin(rotation) + (y - source.Height / 2) * Math.Cos(rotation)));
+                    transX = newX + source.Width / 2;
+                    transY = newY + source.Height / 2;
+                    if (transX >= 0 && transX < source.Width && transY >= 0 && transY < source.Height)
+                    {
+                        result.SetPixel(transX, transY, pixel);
+                    }
+                }
+            }
+            for (int x = 0; x < source.Width/2; x++)
+            {
+                for (int y = source.Height / 2; y < source.Height; y++)
+                {
+                    //quadrant 3
+                    pixel = source.GetPixel(x, y);
+                    newX = (int)((x - source.Width / 2) * Math.Cos(rotation) + (y - source.Height / 2) * (-Math.Sin(rotation)));
+                    newY = (int)(((x - source.Width / 2) * Math.Sin(rotation) + (y - source.Height / 2) * Math.Cos(rotation)));
+                    transX = newX + source.Width / 2;
+                    transY = newY + source.Height / 2;
+                    if (transX >= 0 && transX < source.Width && transY >= 0 && transY < source.Height)
+                    {
+                        result.SetPixel(transX, transY, pixel);
+                    }
+                }
+            }
+            for (int x = source.Width / 2; x < source.Width; x++)
+            {
+                for (int y = 0; y < source.Height/2; y++)
+                {
+                    //quadrant 2
+                    pixel = source.GetPixel(x, y);
+                    newX = (int)((x - source.Width / 2) * Math.Cos(rotation) + (y - source.Height / 2) * (-Math.Sin(rotation)));
+                    newY = (int)(((x - source.Width / 2) * Math.Sin(rotation) + (y - source.Height / 2) * Math.Cos(rotation)));
+                    transX = newX + source.Width / 2;
+                    transY = newY + source.Height / 2;
+                    if (transX >= 0 && transX < source.Width && transY >= 0 && transY < source.Height)
+                    {
+                        result.SetPixel(transX, transY, pixel);
+                    }
+                }
+            }
+            //MessageBox.Show("DONE rotating.");
             outputPic.Image = result;
         }
 
