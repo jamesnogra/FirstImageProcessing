@@ -7,12 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DITDIP;
 
 namespace myDIPFirst
 {
     public partial class Form1 : Form
     {
-        Bitmap source, result;
+        Bitmap source, source1, result;
+        bool aboutToImageSubtract;
+        int tempVal;
 
         public Form1()
         {
@@ -32,12 +35,6 @@ namespace myDIPFirst
                 }
             }
             outputPic.Image = result;
-        }
-
-        //open image dialog
-        private void openImageToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            openFile.ShowDialog();
         }
 
         private void graysacleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -149,10 +146,10 @@ namespace myDIPFirst
             double rotation = Math.PI / 180 * Convert.ToDouble(Prompt.ShowDialog("How many degrees you want to rotate the image?", "Rotation"));
             result = new Bitmap(source.Width, source.Height); //initalize the image
             Color pixel;
-            int newX, newY, transX, transY;
-            for (int x = 0; x < source.Width/2; x++)
+            int newX, newY, transX, transY, cX, cY;
+            for (int x = 0; x < source.Width / 2; x++)
             {
-                for (int y = 0; y < source.Height/2; y++)
+                for (int y = 0; y < source.Height / 2; y++)
                 {
                     //quadrant 1
                     pixel = source.GetPixel(x, y);
@@ -164,48 +161,36 @@ namespace myDIPFirst
                     {
                         result.SetPixel(transX, transY, pixel);
                     }
-                }
-            }
-            for (int x = source.Width / 2; x < source.Width; x++)
-            {
-                for (int y = source.Height / 2; y < source.Height; y++)
-                {
-                    //quadrant 4
-                    pixel = source.GetPixel(x, y);
-                    newX = (int)((x - source.Width / 2) * Math.Cos(rotation) + (y - source.Height / 2) * (-Math.Sin(rotation)));
-                    newY = (int)(((x - source.Width / 2) * Math.Sin(rotation) + (y - source.Height / 2) * Math.Cos(rotation)));
-                    transX = newX + source.Width / 2;
-                    transY = newY + source.Height / 2;
-                    if (transX >= 0 && transX < source.Width && transY >= 0 && transY < source.Height)
-                    {
-                        result.SetPixel(transX, transY, pixel);
-                    }
-                }
-            }
-            for (int x = 0; x < source.Width/2; x++)
-            {
-                for (int y = source.Height / 2; y < source.Height; y++)
-                {
-                    //quadrant 3
-                    pixel = source.GetPixel(x, y);
-                    newX = (int)((x - source.Width / 2) * Math.Cos(rotation) + (y - source.Height / 2) * (-Math.Sin(rotation)));
-                    newY = (int)(((x - source.Width / 2) * Math.Sin(rotation) + (y - source.Height / 2) * Math.Cos(rotation)));
-                    transX = newX + source.Width / 2;
-                    transY = newY + source.Height / 2;
-                    if (transX >= 0 && transX < source.Width && transY >= 0 && transY < source.Height)
-                    {
-                        result.SetPixel(transX, transY, pixel);
-                    }
-                }
-            }
-            for (int x = source.Width / 2; x < source.Width; x++)
-            {
-                for (int y = 0; y < source.Height/2; y++)
-                {
                     //quadrant 2
-                    pixel = source.GetPixel(x, y);
-                    newX = (int)((x - source.Width / 2) * Math.Cos(rotation) + (y - source.Height / 2) * (-Math.Sin(rotation)));
-                    newY = (int)(((x - source.Width / 2) * Math.Sin(rotation) + (y - source.Height / 2) * Math.Cos(rotation)));
+                    cX = source.Width / 2 + x;
+                    cY = y;
+                    pixel = source.GetPixel(cX, cY);
+                    newX = (int)((cX - source.Width / 2) * Math.Cos(rotation) + (cY - source.Height / 2) * (-Math.Sin(rotation)));
+                    newY = (int)(((cX - source.Width / 2) * Math.Sin(rotation) + (cY - source.Height / 2) * Math.Cos(rotation)));
+                    transX = newX + source.Width / 2;
+                    transY = newY + source.Height / 2;
+                    if (transX >= 0 && transX < source.Width && transY >= 0 && transY < source.Height)
+                    {
+                        result.SetPixel(transX, transY, pixel);
+                    }
+                    //quadrant 3
+                    cX = x;
+                    cY = source.Height / 2 + y;
+                    pixel = source.GetPixel(cX, cY);
+                    newX = (int)((cX - source.Width / 2) * Math.Cos(rotation) + (cY - source.Height / 2) * (-Math.Sin(rotation)));
+                    newY = (int)(((cX - source.Width / 2) * Math.Sin(rotation) + (cY - source.Height / 2) * Math.Cos(rotation)));
+                    transX = newX + source.Width / 2;
+                    transY = newY + source.Height / 2;
+                    if (transX >= 0 && transX < source.Width && transY >= 0 && transY < source.Height)
+                    {
+                        result.SetPixel(transX, transY, pixel);
+                    }
+                    //quadrant 4
+                    cX = source.Width / 2 + x;
+                    cY = source.Height / 2 + y;
+                    pixel = source.GetPixel(cX, cY);
+                    newX = (int)((cX - source.Width / 2) * Math.Cos(rotation) + (cY - source.Height / 2) * (-Math.Sin(rotation)));
+                    newY = (int)(((cX - source.Width / 2) * Math.Sin(rotation) + (cY - source.Height / 2) * Math.Cos(rotation)));
                     transX = newX + source.Width / 2;
                     transY = newY + source.Height / 2;
                     if (transX >= 0 && transX < source.Width && transY >= 0 && transY < source.Height)
@@ -214,7 +199,6 @@ namespace myDIPFirst
                     }
                 }
             }
-            //MessageBox.Show("DONE rotating.");
             outputPic.Image = result;
         }
 
@@ -235,6 +219,55 @@ namespace myDIPFirst
             outputPic.Image = result;
 
         }
+
+        private void contrastToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Bitmap tempImage = source;
+            int contrastValue = Convert.ToInt32(Prompt.ShowDialog("Enter contrast value", "Contrast"));
+            result = new Bitmap(source.Width, source.Height); //initalize the image
+            ImageProcess.EqualisationColored(tempImage, ref source, ref result, contrastValue);
+            outputPic.Image = result;
+        }
+
+        private void mergeImagesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            aboutToImageSubtract = true;
+            tempVal = Convert.ToInt32(Prompt.ShowDialog("Enter value threshold for color subtraction. Then select a color from the image you want to color subtract.", "Image Subtraction"));
+        }
+
+        private void myPic_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (aboutToImageSubtract)
+            {
+                aboutToImageSubtract = false;
+                Bitmap b = new Bitmap(myPic.Image);
+                Bitmap c = new Bitmap(source1.Width, source1.Height);
+                Color colorSelected = b.GetPixel(e.X, e.Y);
+                ImageProcess.Scale(ref source1, ref c, source1.Width, source1.Height);
+                ImageProcess.SubtractCustom(ref source, ref c, ref result, colorSelected, tempVal);
+                outputPic.Image = c;
+                //MessageBox.Show("Original Image: " + source1.Width + "x" + source1.Height + "Resized Image: " + c.Width + "x" + c.Height);
+            }
+        }
+
+        //open 2nd file dialog
+        private void open2ndImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFile1.ShowDialog();
+        }
+
+        private void openFile1_FileOk(object sender, CancelEventArgs e)
+        {
+            source1 = new Bitmap(openFile1.FileName);
+            outputPic.Image = source1;
+        }
+
+        //open image dialog
+        private void openImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFile.ShowDialog();
+        }
+
 
         //after clicking the open in the open file dialog
         private void openFile_FileOk(object sender, CancelEventArgs e)

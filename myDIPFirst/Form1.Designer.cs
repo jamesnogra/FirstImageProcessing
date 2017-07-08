@@ -31,6 +31,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.open2ndImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageProcessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,12 +45,15 @@
             this.rotateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.histogramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thresholdingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contrastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mergeImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.myPic = new System.Windows.Forms.PictureBox();
             this.openFile = new System.Windows.Forms.OpenFileDialog();
             this.saveFile = new System.Windows.Forms.SaveFileDialog();
             this.outputPic = new System.Windows.Forms.PictureBox();
-            this.resizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFile1 = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.myPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.outputPic)).BeginInit();
@@ -71,6 +75,7 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openImageToolStripMenuItem,
+            this.open2ndImageToolStripMenuItem,
             this.saveImageToolStripMenuItem,
             this.closeToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -80,20 +85,27 @@
             // openImageToolStripMenuItem
             // 
             this.openImageToolStripMenuItem.Name = "openImageToolStripMenuItem";
-            this.openImageToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.openImageToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.openImageToolStripMenuItem.Text = "Open Image";
             this.openImageToolStripMenuItem.Click += new System.EventHandler(this.openImageToolStripMenuItem_Click);
+            // 
+            // open2ndImageToolStripMenuItem
+            // 
+            this.open2ndImageToolStripMenuItem.Name = "open2ndImageToolStripMenuItem";
+            this.open2ndImageToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.open2ndImageToolStripMenuItem.Text = "Open 2nd Image";
+            this.open2ndImageToolStripMenuItem.Click += new System.EventHandler(this.open2ndImageToolStripMenuItem_Click);
             // 
             // saveImageToolStripMenuItem
             // 
             this.saveImageToolStripMenuItem.Name = "saveImageToolStripMenuItem";
-            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.saveImageToolStripMenuItem.Text = "Save Image";
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.closeToolStripMenuItem.Text = "&Close";
             // 
             // imageProcessToolStripMenuItem
@@ -106,7 +118,9 @@
             this.rotateToolStripMenuItem,
             this.histogramToolStripMenuItem,
             this.thresholdingToolStripMenuItem,
-            this.resizeToolStripMenuItem});
+            this.resizeToolStripMenuItem,
+            this.contrastToolStripMenuItem,
+            this.mergeImagesToolStripMenuItem});
             this.imageProcessToolStripMenuItem.Name = "imageProcessToolStripMenuItem";
             this.imageProcessToolStripMenuItem.Size = new System.Drawing.Size(95, 20);
             this.imageProcessToolStripMenuItem.Text = "&Image Process";
@@ -114,21 +128,21 @@
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.copyToolStripMenuItem.Text = "Copy";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
             // graysacleToolStripMenuItem
             // 
             this.graysacleToolStripMenuItem.Name = "graysacleToolStripMenuItem";
-            this.graysacleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.graysacleToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.graysacleToolStripMenuItem.Text = "Graysacle";
             this.graysacleToolStripMenuItem.Click += new System.EventHandler(this.graysacleToolStripMenuItem_Click);
             // 
             // invertToolStripMenuItem
             // 
             this.invertToolStripMenuItem.Name = "invertToolStripMenuItem";
-            this.invertToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.invertToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.invertToolStripMenuItem.Text = "Invert";
             this.invertToolStripMenuItem.Click += new System.EventHandler(this.invertToolStripMenuItem_Click);
             // 
@@ -139,7 +153,7 @@
             this.horizontalToolStripMenuItem,
             this.bothToolStripMenuItem});
             this.mirrorToolStripMenuItem.Name = "mirrorToolStripMenuItem";
-            this.mirrorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.mirrorToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.mirrorToolStripMenuItem.Text = "Mirror";
             // 
             // verticalToolStripMenuItem
@@ -166,22 +180,43 @@
             // rotateToolStripMenuItem
             // 
             this.rotateToolStripMenuItem.Name = "rotateToolStripMenuItem";
-            this.rotateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rotateToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.rotateToolStripMenuItem.Text = "Rotate";
             this.rotateToolStripMenuItem.Click += new System.EventHandler(this.rotateToolStripMenuItem_Click);
             // 
             // histogramToolStripMenuItem
             // 
             this.histogramToolStripMenuItem.Name = "histogramToolStripMenuItem";
-            this.histogramToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.histogramToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.histogramToolStripMenuItem.Text = "Histogram";
             // 
             // thresholdingToolStripMenuItem
             // 
             this.thresholdingToolStripMenuItem.Name = "thresholdingToolStripMenuItem";
-            this.thresholdingToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.thresholdingToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.thresholdingToolStripMenuItem.Text = "Thresholding";
             this.thresholdingToolStripMenuItem.Click += new System.EventHandler(this.thresholdingToolStripMenuItem_Click);
+            // 
+            // resizeToolStripMenuItem
+            // 
+            this.resizeToolStripMenuItem.Name = "resizeToolStripMenuItem";
+            this.resizeToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.resizeToolStripMenuItem.Text = "Resize";
+            this.resizeToolStripMenuItem.Click += new System.EventHandler(this.resizeToolStripMenuItem_Click);
+            // 
+            // contrastToolStripMenuItem
+            // 
+            this.contrastToolStripMenuItem.Name = "contrastToolStripMenuItem";
+            this.contrastToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.contrastToolStripMenuItem.Text = "Contrast";
+            this.contrastToolStripMenuItem.Click += new System.EventHandler(this.contrastToolStripMenuItem_Click);
+            // 
+            // mergeImagesToolStripMenuItem
+            // 
+            this.mergeImagesToolStripMenuItem.Name = "mergeImagesToolStripMenuItem";
+            this.mergeImagesToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.mergeImagesToolStripMenuItem.Text = "Merge Images";
+            this.mergeImagesToolStripMenuItem.Click += new System.EventHandler(this.mergeImagesToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -198,6 +233,7 @@
             this.myPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.myPic.TabIndex = 1;
             this.myPic.TabStop = false;
+            this.myPic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.myPic_MouseUp);
             // 
             // openFile
             // 
@@ -214,12 +250,10 @@
             this.outputPic.TabIndex = 2;
             this.outputPic.TabStop = false;
             // 
-            // resizeToolStripMenuItem
+            // openFile1
             // 
-            this.resizeToolStripMenuItem.Name = "resizeToolStripMenuItem";
-            this.resizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.resizeToolStripMenuItem.Text = "Resize";
-            this.resizeToolStripMenuItem.Click += new System.EventHandler(this.resizeToolStripMenuItem_Click);
+            this.openFile1.FileName = "openFileDialog1";
+            this.openFile1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFile1_FileOk);
             // 
             // Form1
             // 
@@ -265,6 +299,10 @@
         private System.Windows.Forms.ToolStripMenuItem rotateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem thresholdingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resizeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem contrastToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem open2ndImageToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog openFile1;
+        private System.Windows.Forms.ToolStripMenuItem mergeImagesToolStripMenuItem;
     }
 }
 
