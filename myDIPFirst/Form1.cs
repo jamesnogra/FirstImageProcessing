@@ -206,16 +206,7 @@ namespace myDIPFirst
         {
             int tempNewWidth = Convert.ToInt32(Prompt.ShowDialog("Enter the new width", "Width"));
             int tempNewHeight = Convert.ToInt32(Prompt.ShowDialog("Enter the new height", "Height"));
-            result = new Bitmap(tempNewWidth, tempNewHeight); //initalize the image
-            Color pixel;
-            for (int x = 0; x < tempNewWidth; x++)
-            {
-                for (int y = 0; y < tempNewWidth; y++)
-                {
-                    pixel = source.GetPixel(x * source.Width / tempNewWidth, y * source.Height / tempNewHeight);
-                    result.SetPixel(x, y, pixel);
-                }
-            }
+            resizeImage(ref source, ref result, tempNewWidth, tempNewHeight);
             outputPic.Image = result;
 
         }
@@ -232,7 +223,21 @@ namespace myDIPFirst
         private void mergeImagesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             aboutToImageSubtract = true;
-            tempVal = Convert.ToInt32(Prompt.ShowDialog("Enter value threshold for color subtraction. Then select a color from the image you want to color subtract.", "Image Subtraction"));
+            tempVal = Convert.ToInt32(Prompt.ShowDialog("Enter value threshold for color subtraction. Then select a color from the first image.", "Image Subtraction"));
+        }
+
+        public void resizeImage(ref Bitmap source, ref Bitmap result, int width, int height)
+        {
+            result = new Bitmap(width, height); //initalize the image
+            Color pixel;
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    pixel = source.GetPixel(x * source.Width / width, y * source.Height / height);
+                    result.SetPixel(x, y, pixel);
+                }
+            }
         }
 
         private void myPic_MouseUp(object sender, MouseEventArgs e)
@@ -240,13 +245,14 @@ namespace myDIPFirst
             if (aboutToImageSubtract)
             {
                 aboutToImageSubtract = false;
-                Bitmap b = new Bitmap(myPic.Image);
-                Bitmap c = new Bitmap(source1.Width, source1.Height);
-                Color colorSelected = b.GetPixel(e.X, e.Y);
-                ImageProcess.Scale(ref source1, ref c, source1.Width, source1.Height);
-                ImageProcess.SubtractCustom(ref source, ref c, ref result, colorSelected, tempVal);
-                outputPic.Image = c;
-                //MessageBox.Show("Original Image: " + source1.Width + "x" + source1.Height + "Resized Image: " + c.Width + "x" + c.Height);
+                Bitmap resizedSource1 = new Bitmap(source.Width, source.Height);
+                Color colorSelected = source.GetPixel(e.X, e.Y);
+                string tempLog = "";
+                resizeImage(ref source1, ref resizedSource1, source.Width, source.Height);
+                //MessageBox.Show("Source: " + source);
+                ImageProcess.SubtractCustom(ref source, ref resizedSource1, ref result, colorSelected, tempVal, ref tempLog);
+                outputPic.Image = result;
+                //MessageBox.Show(tempLog);
             }
         }
 

@@ -100,11 +100,10 @@ namespace DITDIP
 
         }
 
-        public static void SubtractCustom(ref Bitmap a, ref Bitmap b, ref Bitmap result, Color colorSelected, int value)
+        public static void SubtractCustom(ref Bitmap a, ref Bitmap b, ref Bitmap result, Color colorSelected, int value, ref string customLog)
         {
             result = new Bitmap(a.Width, a.Height);
             byte ARedData = 0, AGreenData = 0, ABlueData = 0;
-            byte BRedData = 0, BGreenData = 0, BBlueData = 0;
             for (int x = 0; x < a.Width; x++)
             {
                 for (int y = 0; y < a.Height; y++)
@@ -115,21 +114,21 @@ namespace DITDIP
                     ARedData = adata.R;
                     AGreenData = adata.G;
                     ABlueData = adata.B;
-                    BRedData = bdata.R;
-                    BGreenData = bdata.G;
-                    BBlueData = bdata.B;
-                    
-                    if (Math.Abs(ARedData - BRedData) > value && Math.Abs(AGreenData - BGreenData) > value && Math.Abs(ABlueData - BBlueData) > value)
+
+                    if ((Math.Abs(ARedData - colorSelected.R) < value) && (Math.Abs(AGreenData - colorSelected.G) < value) && (Math.Abs(ABlueData - colorSelected.B) < value))
                     {
-                        result.SetPixel(x, y, adata);
+                        customLog = "At (" + x + "," + y + ")\n";
+                        customLog += "Original: (" + ARedData + "," + AGreenData + "," + ABlueData + ")\n";
+                        customLog += "Selected: (" + colorSelected.R + "," + colorSelected.G + "," + colorSelected.B + ")\n";
+                        customLog += "Difference: (" + Math.Abs(ARedData - colorSelected.R) + "," + Math.Abs(AGreenData - colorSelected.G) + "," + Math.Abs(ABlueData - colorSelected.B) + ")\n";
+                        result.SetPixel(x, y, bdata);
                     }
                     else
                     {
-                        result.SetPixel(x, y, Color.Red);
+                        result.SetPixel(x, y, adata);
                     }
                 }
             }
-
         }
 
 
