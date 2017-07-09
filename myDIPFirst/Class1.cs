@@ -271,7 +271,7 @@ namespace DITDIP
         {
             int height = a.Height;
             int width = a.Width;
-            int numSamples, histSum;
+            int numSamples, histSumR, histSumG, histSumB;
             int[] YmapR = new int[256];
             int[] YmapG = new int[256];
             int[] YmapB = new int[256];
@@ -293,36 +293,34 @@ namespace DITDIP
                     anotherImage.SetPixel(x, y, nakuha);
                 }
             }
-
-            //start with red
             for (int x = 0; x < a.Width; x++)
             {
                 for (int y = 0; y < a.Height; y++)
                 {
                     nakuha = anotherImage.GetPixel(x, y);
-                    graydata = (byte)((nakuha.R*0.33 + nakuha.G*.33 + nakuha.B*.34));
+                    graydata = (byte)((nakuha.R * 0.33 + nakuha.G * .33 + nakuha.B * .34));
                     gray = Color.FromArgb(graydata, 0, 0);
-                    a.SetPixel(x, y, gray);
-                }
-            }
-            //histogram 1d data;
-            for (int x = 0; x < a.Width; x++)
-            {
-                for (int y = 0; y < a.Height; y++)
-                {
-                    nakuha = a.GetPixel(x, y);
-                    histR[nakuha.R]++;
-
+                    histR[gray.R]++;
+                    gray = Color.FromArgb(0, graydata, 0);
+                    histG[gray.G]++;
+                    gray = Color.FromArgb(0, 0, graydata);
+                    histB[gray.B]++;
                 }
             }
             // remap the Ys, use the maximum contrast (percent == 100) 
             // based on histogram equalization
             numSamples = (a.Width * a.Height);   // # of samples that contributed to the histogram
-            histSum = 0;
+            histSumR = 0;
+            histSumG = 0;
+            histSumB = 0;
             for (int h = 0; h < 256; h++)
             {
-                histSum += histR[h];
-                YmapR[h] = histSum * 255 / numSamples;
+                histSumR += histR[h];
+                YmapR[h] = histSumR * 255 / numSamples;
+                histSumG += histG[h];
+                YmapG[h] = histSumG * 255 / numSamples;
+                histSumB += histB[h];
+                YmapB[h] = histSumB * 255 / numSamples;
             }
             // if desired contrast is not maximum (percent < 100), then adjust the mapping
             if (percent < 100)
@@ -330,83 +328,7 @@ namespace DITDIP
                 for (int h = 0; h < 256; h++)
                 {
                     YmapR[h] = h + ((int)YmapR[h] - h) * percent / 100;
-                }
-            }
-
-            //then with green
-            for (int x = 0; x < a.Width; x++)
-            {
-                for (int y = 0; y < a.Height; y++)
-                {
-                    nakuha = anotherImage.GetPixel(x, y);
-                    graydata = (byte)((nakuha.R * 0.33 + nakuha.G * .33 + nakuha.B * .34));
-                    gray = Color.FromArgb(0, graydata, 0);
-                    a.SetPixel(x, y, gray);
-                }
-            }
-            //histogram 1d data;
-            for (int x = 0; x < a.Width; x++)
-            {
-                for (int y = 0; y < a.Height; y++)
-                {
-                    nakuha = a.GetPixel(x, y);
-                    histG[nakuha.G]++;
-
-                }
-            }
-            // remap the Ys, use the maximum contrast (percent == 100) 
-            // based on histogram equalization
-            numSamples = (a.Width * a.Height);   // # of samples that contributed to the histogram
-            histSum = 0;
-            for (int h = 0; h < 256; h++)
-            {
-                histSum += histG[h];
-                YmapG[h] = histSum * 255 / numSamples;
-            }
-            // if desired contrast is not maximum (percent < 100), then adjust the mapping
-            if (percent < 100)
-            {
-                for (int h = 0; h < 256; h++)
-                {
                     YmapG[h] = h + ((int)YmapG[h] - h) * percent / 100;
-                }
-            }
-            
-            //then with blue
-            for (int x = 0; x < a.Width; x++)
-            {
-                for (int y = 0; y < a.Height; y++)
-                {
-                    nakuha = anotherImage.GetPixel(x, y);
-                    graydata = (byte)((nakuha.R * 0.33 + nakuha.G * .33 + nakuha.B * .34));
-                    gray = Color.FromArgb(0, 0, graydata);
-                    a.SetPixel(x, y, gray);
-                }
-            }
-            //histogram 1d data;
-            for (int x = 0; x < a.Width; x++)
-            {
-                for (int y = 0; y < a.Height; y++)
-                {
-                    nakuha = a.GetPixel(x, y);
-                    histB[nakuha.B]++;
-
-                }
-            }
-            // remap the Ys, use the maximum contrast (percent == 100) 
-            // based on histogram equalization
-            numSamples = (a.Width * a.Height);   // # of samples that contributed to the histogram
-            histSum = 0;
-            for (int h = 0; h < 256; h++)
-            {
-                histSum += histB[h];
-                YmapB[h] = histSum * 255 / numSamples;
-            }
-            // if desired contrast is not maximum (percent < 100), then adjust the mapping
-            if (percent < 100)
-            {
-                for (int h = 0; h < 256; h++)
-                {
                     YmapB[h] = h + ((int)YmapB[h] - h) * percent / 100;
                 }
             }
@@ -421,9 +343,7 @@ namespace DITDIP
                     Color temp = Color.FromArgb(YmapR[anotherImage.GetPixel(x, y).R], YmapG[anotherImage.GetPixel(x, y).G], YmapB[anotherImage.GetPixel(x, y).B]);
                     b.SetPixel(x, y, temp);
                 }
-
             }
-
         }
 
         public static void Histogram(ref Bitmap a, ref Bitmap b) 

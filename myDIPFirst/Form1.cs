@@ -249,7 +249,6 @@ namespace myDIPFirst
                 Color colorSelected = source.GetPixel(e.X, e.Y);
                 string tempLog = "";
                 resizeImage(ref source1, ref resizedSource1, source.Width, source.Height);
-                //MessageBox.Show("Source: " + source);
                 ImageProcess.SubtractCustom(ref source, ref resizedSource1, ref result, colorSelected, tempVal, ref tempLog);
                 outputPic.Image = result;
                 //MessageBox.Show(tempLog);
